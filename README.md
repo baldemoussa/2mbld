@@ -93,10 +93,19 @@ Edit `Back-end/src/seed/portfolio.ts`, then run `npm run seed`.
 - Community involvement is listed under Education, all from The Welcoming Center.
 - Selected work is eight public apps. Their images live in `Font-end/public/images/works/`.
 
-## Production notes
+## Deploy on Render
 
-Set `NODE_ENV=production`, a strong `JWT_SECRET`, and `CLIENT_ORIGIN` to the deployed site with no trailing slash. Build the API with `npm run build`, then start it with `npm start`.
+The site and the API run as one Render web service. In production the API serves the built page, including `/admin`. Leave `VITE_API_URL` empty so the browser calls `/api` on that same address.
 
-If the site and API are on different hosts, set `VITE_API_URL` to the API origin before `npm run build` in `Font-end`. Leave it empty when the site host proxies `/api` to the API. That keeps the admin session and the visitor cookie on the same site. On separate hosts those cookies are `Secure` and `SameSite=None`.
-
-The static host must serve `index.html` for `/admin` and for a refreshed page. Dark mode is the default and does not need a setting. No canonical URL is set because the production domain is not chosen yet.
+1. Create an empty GitHub repository named `portfolio` under `baldemoussa`. Do not add a README there.
+2. Push this folder to that repository. Do not commit `Back-end/.env` or `Font-end/.env`.
+3. In MongoDB Atlas, allow network access from anywhere (`0.0.0.0/0`) so Render can connect.
+4. In Render, create a Web Service from that repository. The root `render.yaml` sets the build and start commands. Choose the free instance to try it, or a paid instance if the site should stay awake. The free instance sleeps, and the first visit after sleep waits for the API.
+5. Set these environment variables on the service. Copy the secret values from `Back-end/.env`. Use `MONGODB_URI` for the value currently stored as `MONGO_URI`.
+   - `NODE_ENV` = `production`
+   - `MONGODB_URI`
+   - `JWT_SECRET`
+   - `ADMIN_EMAIL`
+   - `ADMIN_PASSWORD`
+   - `CLIENT_ORIGIN` = the Render address, with `https://` and no trailing slash. Add this after Render shows the address, then redeploy.
+6. Open the Render address. Sign in at `/admin` with the same administrator email and password.

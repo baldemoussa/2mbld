@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+*.local
+Back-end/node_modules/
+Back-end/dist/
+Back-end/.env
+Font-end/node_modules/
+Font-end/dist/
+Font-end/.env
