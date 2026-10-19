@@ -3,7 +3,7 @@
   "private": true,
   "description": "Portfolio site and API for Mamadou Moussa BALDE.",
   "scripts": {
-    "build": "npm ci --prefix Font-end && npm run build --prefix Font-end && npm ci --prefix Back-end && npm run build --prefix Back-end",
+    "build": "npm ci --include=dev --prefix Font-end && npm run build --prefix Font-end && npm ci --include=dev --prefix Back-end && npm run build --prefix Back-end",
     "start": "npm start --prefix Back-end"
   },
   "engines": {
