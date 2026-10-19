@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+    --color-paper: 244 247 251;
+    --color-surface: 255 255 255;
+    --color-ink: 16 42 67;
+    --color-muted: 82 101 122;
+    --color-line: 220 229 239;
+  }
+
+  html.dark {
+    color-scheme: dark;
+    --color-paper: 7 18 32;
+    --color-surface: 16 34 54;
+    --color-ink: 232 238 245;
+    --color-muted: 156 173 191;
+    --color-line: 42 62 86;
+  }
+
+  body {
+    @apply overflow-x-hidden bg-paper text-ink antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid #0b6fdb;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+html.dark .text-navy {
+  color: rgb(var(--color-ink));
+}
