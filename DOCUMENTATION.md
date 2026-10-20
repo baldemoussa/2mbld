@@ -37,7 +37,7 @@ The phone number is not rendered. It stays inside the downloadable resume PDF.
 ## Published profile
 
 - Name: Mamadou Moussa BALDE
-- Headline: Oracle Developer | Full-Stack MERN Developer | Software Engineer
+- Headline: Oracle Developer | Full-Stack MERN | AI Native Software Engineer
 - Tagline: Better Code, Better Solutions.
 - Location: Philadelphia, Pennsylvania
 - Email: lebaldem2@gmail.com

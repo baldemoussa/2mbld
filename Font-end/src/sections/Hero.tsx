@@ -3,7 +3,7 @@ import { featuredTechnologies, TechIcon } from '../components/TechIcon.tsx'
 import { WorkspaceArt } from '../components/WorkspaceArt.tsx'
 import type { Profile } from '../types/index.ts'
 
-const fallbackHeadline = 'Oracle Developer | Full-Stack MERN Developer | Software Engineer'
+const fallbackHeadline = 'Oracle Developer | Full-Stack MERN | AI Native Software Engineer'
 const fallbackSummary =
   'I modernize enterprise applications and build reliable software across Oracle technologies, relational databases, and modern full-stack development. I combine deep enterprise application experience with React, Node.js, TypeScript, REST APIs, and software engineering practices to deliver maintainable solutions.'
 

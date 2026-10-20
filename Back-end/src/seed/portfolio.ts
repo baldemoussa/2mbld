@@ -12,7 +12,7 @@ const utc = (year: number, month: number) => new Date(Date.UTC(year, month - 1, 
 
 const profile = {
   fullName: 'Mamadou Moussa BALDE',
-  headline: 'Oracle Developer | Full-Stack MERN Developer | Software Engineer',
+  headline: 'Oracle Developer | Full-Stack MERN | AI Native Software Engineer',
   tagline: 'Better Code, Better Solutions.',
   summary:
     'I modernize enterprise applications and build reliable software across Oracle technologies, relational databases, and modern full-stack development. I combine deep enterprise application experience with React, Node.js, TypeScript, REST APIs, and software engineering practices to deliver maintainable solutions.',
