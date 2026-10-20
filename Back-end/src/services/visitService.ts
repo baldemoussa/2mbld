@@ -35,8 +35,17 @@ function placeName(value: unknown) {
   return cleaned
 }
 
+function normalizeIp(value: string) {
+  return value.trim().toLowerCase().replace(/^::ffff:/, '')
+}
+
+export function publicVisitorIp(candidates: Array<string | undefined>) {
+  const addresses = candidates.flatMap((value) => (value ? value.split(',') : [])).map(normalizeIp).filter(Boolean)
+  return addresses.find((ip) => isPublicIp(ip)) ?? ''
+}
+
 export function isPublicIp(ip: string) {
-  const value = ip.trim().toLowerCase().replace(/^::ffff:/, '')
+  const value = normalizeIp(ip)
   if (!value || value === '::1' || value === '0.0.0.0') return false
   if (value.includes('.')) {
     const parts = value.split('.').map(Number)
@@ -53,23 +62,38 @@ export function isPublicIp(ip: string) {
   return value.includes(':')
 }
 
-export async function lookupPlace(ip: string): Promise<VisitPlace> {
+async function fetchPlace(url: string): Promise<VisitPlace> {
   const empty = { country: '', city: '' }
-  if (process.env.NODE_ENV === 'test' || !isPublicIp(ip)) return empty
-
   const controller = new AbortController()
-  const timer = setTimeout(() => controller.abort(), 2500)
+  const timer = setTimeout(() => controller.abort(), 4000)
   try {
-    const response = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}`, { signal: controller.signal })
+    const response = await fetch(url, { signal: controller.signal, headers: { accept: 'application/json' } })
     if (!response.ok) return empty
     const body = (await response.json()) as { success?: boolean; country?: unknown; city?: unknown }
-    if (!body.success) return empty
+    if (body.success === false) return empty
     return { country: placeName(body.country), city: placeName(body.city) }
   } catch {
     return empty
   } finally {
     clearTimeout(timer)
   }
+}
+
+export async function lookupPlace(ip: string): Promise<VisitPlace> {
+  const empty = { country: '', city: '' }
+  if (process.env.NODE_ENV === 'test') return empty
+  const direct = isPublicIp(ip)
+  if (!direct && process.env.NODE_ENV === 'production') return empty
+
+  const encoded = encodeURIComponent(ip)
+  const primary = direct ? `https://ipwho.is/${encoded}` : 'https://ipwho.is/'
+  const first = await fetchPlace(primary)
+  if (first.country || first.city) return first
+
+  const secondary = direct
+    ? `https://get.geojs.io/v1/ip/geo/${encoded}.json`
+    : 'https://get.geojs.io/v1/ip/geo.json'
+  return fetchPlace(secondary).then((place) => (place.country || place.city ? place : empty))
 }
 
 export async function saveVisit(visitorId: string, place: Partial<VisitPlace> = {}, month = currentMonth()) {
@@ -82,9 +106,21 @@ export async function saveVisit(visitorId: string, place: Partial<VisitPlace> = 
       { upsert: true },
     )
   } catch (error) {
-    if (isDuplicate(error)) return
-    throw error
+    if (!isDuplicate(error)) throw error
   }
+
+  if (!country && !city) return
+  await Visit.updateOne(
+    {
+      visitorId,
+      month,
+      $and: [
+        { $or: [{ country: '' }, { country: { $exists: false } }] },
+        { $or: [{ city: '' }, { city: { $exists: false } }] },
+      ],
+    },
+    { $set: { country, city } },
+  )
 }
 
 function sortLocations(locations: VisitLocation[]) {

@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto'
 import type { CookieOptions, NextFunction, Request, Response } from 'express'
 import { getEnv } from '../config/env.js'
-import { listMonthlyVisits, lookupPlace, saveVisit } from '../services/visitService.js'
+import { listMonthlyVisits, lookupPlace, publicVisitorIp, saveVisit } from '../services/visitService.js'
 
 const VISITOR_COOKIE = 'visitor_id'
 const VISITOR_ID = /^[a-f0-9]{32}$/
@@ -28,7 +28,13 @@ export async function recordVisit(req: Request, res: Response, next: NextFunctio
         : submitted && VISITOR_ID.test(submitted)
           ? submitted
           : randomBytes(16).toString('hex')
-    const ip = (req.ip || req.socket.remoteAddress || '').replace(/^::ffff:/, '')
+    const ip = publicVisitorIp([
+      req.get('cf-connecting-ip'),
+      req.get('x-forwarded-for'),
+      req.get('x-real-ip'),
+      req.ip,
+      req.socket.remoteAddress,
+    ])
     await saveVisit(visitorId, await lookupPlace(ip))
     res.cookie(VISITOR_COOKIE, visitorId, cookieOptions())
     res.status(201).json({ recorded: true })

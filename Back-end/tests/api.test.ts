@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { createApp } from '../src/app.js'
 import { ContactMessage } from '../src/models/ContactMessage.js'
 import { Visit } from '../src/models/Visit.js'
+import { publicVisitorIp, saveVisit } from '../src/services/visitService.js'
 import { Experience } from '../src/models/Experience.js'
 import { Profile } from '../src/models/Profile.js'
 import { SkillCategory } from '../src/models/SkillCategory.js'
@@ -164,6 +165,15 @@ describe('contact submission', () => {
   })
 })
 
+describe('visitor address', () => {
+  it('uses the first public address and skips private proxy addresses', () => {
+    expect(publicVisitorIp(['10.0.0.4', '203.0.113.8, 172.16.0.1', '127.0.0.1'])).toBe('203.0.113.8')
+    expect(publicVisitorIp(['8.8.8.8', '203.0.113.8'])).toBe('8.8.8.8')
+    expect(publicVisitorIp(['::ffff:198.51.100.20'])).toBe('198.51.100.20')
+    expect(publicVisitorIp(['127.0.0.1', '10.1.1.1', '::1'])).toBe('')
+  })
+})
+
 describe('visitor counts', () => {
   it('counts one browser once in the same month', async () => {
     const agent = request.agent(app)
@@ -186,6 +196,17 @@ describe('visitor counts', () => {
     ])
     expect(first.status).toBe(201)
     expect(second.status).toBe(201)
+    expect(await Visit.countDocuments({ visitorId })).toBe(1)
+  })
+
+  it('fills a blank place and keeps a place that is already known', async () => {
+    const visitorId = 'a'.repeat(32)
+    await saveVisit(visitorId, {}, '2026-10')
+    await saveVisit(visitorId, { country: 'United States', city: 'Philadelphia' }, '2026-10')
+    expect((await Visit.findOne({ visitorId }))?.city).toBe('Philadelphia')
+
+    await saveVisit(visitorId, { country: 'Guinea', city: 'Conakry' }, '2026-10')
+    expect((await Visit.findOne({ visitorId }))?.city).toBe('Philadelphia')
     expect(await Visit.countDocuments({ visitorId })).toBe(1)
   })
 
