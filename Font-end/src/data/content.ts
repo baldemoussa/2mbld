@@ -44,7 +44,7 @@ export const navItems = [
   { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
   { href: '#skills', label: 'Skills' },
-  { href: '#work', label: 'Work' },
+  { href: '#work', label: 'Published Work' },
   { href: '#experience', label: 'Experience' },
   { href: '#education', label: 'Education' },
   { href: '#contact', label: 'Contact' },
