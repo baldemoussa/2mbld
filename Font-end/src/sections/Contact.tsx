@@ -33,7 +33,7 @@ export function ContactForm({ email }: { email: string }) {
         title="Let's build something great together!"
         icon={<Send className="h-7 w-7" aria-hidden="true" />}
       />
-      <p className="text-sm leading-6 text-muted">
+      <p className="text-base leading-relaxed text-muted">
         I'm open to professional opportunities and technical collaborations involving Oracle technologies,
         enterprise modernization, databases, and full-stack software engineering.
       </p>

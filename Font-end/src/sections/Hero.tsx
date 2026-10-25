@@ -26,12 +26,12 @@ export function Hero({ profile }: { profile: Profile | null }) {
 
         <div className="flex flex-col items-center justify-center gap-8 px-4 py-10 text-center sm:px-8 lg:items-start lg:px-12 lg:py-12 lg:text-left">
           <div className="w-full max-w-3xl">
-            <p className="text-xl text-slate-300">Hello, I'm</p>
+            <p className="text-base text-slate-300">Hello, I'm</p>
             <h1 className="mt-2 text-4xl font-bold leading-tight tracking-tight xl:text-5xl">
               {given} <span className="text-accent">{surname}</span>
             </h1>
-            <p className="mt-3 text-2xl font-semibold leading-6 text-slate-200 sm:text-base">{headline}</p>
-            <p className="mt-4 text-xl leading-7 text-slate-300">{summary}</p>
+            <p className="mt-3 text-lg font-semibold leading-relaxed text-slate-200 sm:text-xl">{headline}</p>
+            <p className="mt-4 text-lg leading-relaxed text-slate-300">{summary}</p>
             <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <a
                 href="#experience"

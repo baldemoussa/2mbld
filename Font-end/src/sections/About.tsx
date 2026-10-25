@@ -14,7 +14,7 @@ export function About() {
           />
           <div className="max-w-xl space-y-4">
             {aboutParagraphs.map((paragraph) => (
-              <p key={paragraph} className="text-sm leading-7 text-muted">
+              <p key={paragraph} className="text-base leading-relaxed text-muted">
                 {paragraph}
               </p>
             ))}
@@ -22,7 +22,7 @@ export function About() {
         </div>
         <ul className="space-y-4 md:pt-14">
           {aboutPoints.map((point) => (
-            <li key={point} className="flex items-start gap-3 text-sm text-ink">
+            <li key={point} className="flex items-start gap-3 text-base leading-relaxed text-ink">
               <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent text-white">
                 <Check className="h-3.5 w-3.5" aria-hidden="true" />
               </span>

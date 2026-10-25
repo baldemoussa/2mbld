@@ -16,8 +16,8 @@ export function Capabilities() {
           {capabilities.map((item) => (
             <article key={item.title} className="rounded-2xl border border-line bg-paper p-5 shadow-card">
               <IconBadge name={item.icon} />
-              <h3 className="mt-4 font-semibold text-navy">{item.title}</h3>
-              <p className="mt-2 text-sm leading-6 text-muted">{item.description}</p>
+              <h3 className="mt-4 text-lg font-semibold text-navy">{item.title}</h3>
+              <p className="mt-2 text-base leading-relaxed text-muted">{item.description}</p>
             </article>
           ))}
         </div>

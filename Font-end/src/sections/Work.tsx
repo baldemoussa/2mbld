@@ -32,9 +32,9 @@ export function WorkSection({ works, status }: { works: Work[]; status: 'loading
                 ) : null}
                 <div className="flex flex-1 flex-col p-6">
                 <h3 className="text-lg font-semibold text-navy">{work.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted">{work.summary}</p>
+                <p className="mt-2 text-base leading-relaxed text-muted">{work.summary}</p>
                 {work.highlights.length > 0 ? (
-                  <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-ink">
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-base leading-relaxed text-ink">
                     {work.highlights.map((item) => (
                       <li key={item}>{item}</li>
                     ))}

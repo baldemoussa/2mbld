@@ -9,7 +9,7 @@ export function SkillGroup({ category }: { category: SkillCategory }) {
         <IconBadge name={category.icon} />
         <h3 className="min-w-0 text-lg font-semibold leading-snug text-navy">{category.name}</h3>
       </div>
-      {category.description ? <p className="mb-3 text-sm text-muted">{category.description}</p> : null}
+      {category.description ? <p className="mb-3 text-base leading-relaxed text-muted">{category.description}</p> : null}
       <ul className="flex flex-wrap gap-2">
         {category.skills.map((skill) => (
           <li

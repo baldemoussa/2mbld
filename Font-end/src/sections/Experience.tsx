@@ -48,30 +48,30 @@ export function ExperienceBand({
               <ul className="space-y-5">
                 {education.map((item) => (
                   <li key={`${item.institution}-${item.qualification}`}>
-                    <h3 className="text-sm font-semibold text-navy">
+                    <h3 className="text-lg font-semibold text-navy">
                       {item.institution} — {item.qualification}
                     </h3>
-                    <p className="mt-1 text-xs text-muted">{educationMeta(item)}</p>
-                    {item.description ? <p className="mt-1 text-xs leading-5 text-muted">{item.description}</p> : null}
+                    <p className="mt-1 text-sm text-muted">{educationMeta(item)}</p>
+                    {item.description ? <p className="mt-1 text-base leading-relaxed text-muted">{item.description}</p> : null}
                   </li>
                 ))}
               </ul>
               {volunteer.length > 0 ? (
                 <div>
-                  <h3 className="text-sm font-semibold text-navy">Community involvement</h3>
-                  <p className="mt-3 text-sm font-medium text-ink">{volunteer[0].organization}</p>
-                  <ul className="mt-2 list-disc space-y-3 pl-5 text-sm text-ink">
+                  <h3 className="text-lg font-semibold text-navy">Community involvement</h3>
+                  <p className="mt-3 text-base font-medium text-ink">{volunteer[0].organization}</p>
+                  <ul className="mt-2 list-disc space-y-3 pl-5 text-base leading-relaxed text-ink">
                     {volunteer.map((item) => (
                       <li key={item.role}>
                         <p>{item.role}</p>
-                        <p className="text-xs text-muted">{dateRange(item.startDate, item.endDate, item.isCurrent)}</p>
+                        <p className="text-sm text-muted">{dateRange(item.startDate, item.endDate, item.isCurrent)}</p>
                       </li>
                     ))}
                   </ul>
                 </div>
               ) : null}
               <div>
-                <h3 className="text-sm font-semibold text-navy">Quick Links</h3>
+                <h3 className="text-lg font-semibold text-navy">Quick Links</h3>
                 <ul className="mt-3 space-y-2 text-sm">
                   <li>
                     <a className="inline-flex items-center gap-2 break-all text-accent hover:underline" href={`mailto:${email}`}>
