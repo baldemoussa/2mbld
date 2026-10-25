@@ -7,8 +7,10 @@ const { port } = getEnv()
 
 try {
   await connectDb()
-} catch {
-  console.error('Database connection failed. Check MONGODB_URI and try again.')
+} catch (error) {
+  const message = error instanceof Error ? `${error.name}: ${error.message}` : 'Unknown database connection error.'
+  const safeMessage = message.replace(/(mongodb(?:\+srv)?:\/\/)[^@\s]+@/gi, '$1[REDACTED]@')
+  console.error(`Database connection failed: ${safeMessage}`)
   process.exit(1)
 }
 
