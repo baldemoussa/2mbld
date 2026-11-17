@@ -278,6 +278,22 @@ const volunteer = [
 
 const works = [
   {
+    title: 'Oracle APEX Enterprise HR Management System',
+    slug: 'oracle-apex-enterprise-hr',
+    imageUrl: '/images/works/oracle-apex-enterprise-hr.png',
+    summary:
+      'An Oracle APEX application for maintaining HR employee, department, job, career-history, office-location, and workforce analytics data.',
+    repositoryUrl: 'https://github.com/baldemoussa/Oracle-APEX-Enterprise-HR-management-system',
+    technologies: ['Oracle APEX', 'PL/SQL', 'Oracle Database', 'SQL', 'APEXLang'],
+    highlights: [
+      'Includes employee and department directories, centralized employee profiles, forms, reports, maps, and executive analytics.',
+      'Provides Reader, Contributor, and Administrator role protections for HR data and administrative operations.',
+      'Maintained as APEXLang source and designed for Oracle APEX 26.2 validation and deployment.',
+    ],
+    sortOrder: 0,
+    isPublished: true,
+  },
+  {
     title: 'Pro-Tasker',
     slug: 'pro-tasker',
     imageUrl: '/images/works/pro-tasker.png',
